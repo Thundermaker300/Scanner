@@ -63,6 +63,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="CommandSystem">
+      <HintPath>$(EXILED_REFERENCES)\CommandSystem.Core.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(EXILED_REFERENCES)\UnityEngine.dll</HintPath>
     </Reference>
@@ -71,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ForceScan.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Config.cs" />

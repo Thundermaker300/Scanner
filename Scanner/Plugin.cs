@@ -17,6 +17,8 @@ namespace Scanner
         public static Plugin Singleton;
         private EventHandlers handler;
         public static bool SerpentsHandEnabled = false;
+        public static bool ScanInProgress = false;
+        public static bool Force = false;
         public override void OnEnabled()
         {
             Singleton = this;
