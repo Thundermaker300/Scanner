@@ -16,7 +16,7 @@ namespace Scanner
     public class EventHandlers
     {
         private static Plugin plugin;
-        public List<CoroutineHandle> Coroutines = new List<CoroutineHandle> { };
+        private List<CoroutineHandle> Coroutines = new List<CoroutineHandle> { };
         public EventHandlers(Plugin P) => plugin = P;
         private List<Team> GetAliveTeams()
         {
