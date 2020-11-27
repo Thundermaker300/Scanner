@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.Loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Handlers = Exiled.Events.Handlers;
+using MEC;
 
 namespace Scanner
 {
@@ -14,6 +16,7 @@ namespace Scanner
     {
         public static Plugin Singleton;
         private EventHandlers handler;
+        public static bool SerpentsHandEnabled = false;
         public override void OnEnabled()
         {
             Singleton = this;
@@ -21,6 +24,20 @@ namespace Scanner
 
             Handlers.Server.RoundStarted += handler.OnRoundStarted;
             Handlers.Server.RoundEnded += handler.OnRoundEnded;
+
+            foreach (var p in Loader.Plugins)
+            {
+                if (p.Name == "SerpentsHand")
+                {
+                    SerpentsHandEnabled = true;
+                }
+            }
+
+            if (!SerpentsHandEnabled)
+            {
+                Log.Info("Serpent's hand not enabled!");
+            }
+
             base.OnEnabled();
         }
 
