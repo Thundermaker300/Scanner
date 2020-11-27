@@ -47,7 +47,7 @@ namespace Scanner
             return $"{amount} {(amount > 1 ? plugin.Config.TeamPronounciationPlural[t] : plugin.Config.TeamPronounciationSingular[t])} . ";
         }
 
-        public string GetScpString(RoleType rt)
+        public string GetScpString(RoleType rt, int amount) /*
         {
             StringBuilder scpList = new StringBuilder();
             scpList.Append("SCP ");
@@ -56,12 +56,16 @@ namespace Scanner
                 scpList.Append($"{c} ");
             }
             return scpList.ToString();
-        }
+        }*/ => $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Config.ScpPronounciation[rt]}";
 
         public IEnumerator<float> Scan()
         {
             for (; ;)
             {
+                while (Player.List.Where(Ply => Ply.IsAlive).Count() < 1)
+                {
+                    yield return Timing.WaitForSeconds(1f);
+                }
                 yield return Timing.WaitForSeconds(plugin.Config.LengthBetweenScans);
                 Cassie.Message(plugin.Config.ScanStartMessage.Replace("{length}", plugin.Config.ScanLength.ToString()));
                 yield return Timing.WaitForSeconds(plugin.Config.ScanLength);
@@ -73,9 +77,21 @@ namespace Scanner
                 }
                 if (plugin.Config.IncludeScpListInScan == true)
                 {
-                    foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP && Ply.Role != RoleType.Scp0492))
+                    Dictionary<RoleType, int> ScpCount = new Dictionary<RoleType, int> { };
+                    foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP))
                     {
-                        builder.Append(GetScpString(Ply.Role));
+                        if (!ScpCount.ContainsKey(Ply.Role))
+                        {
+                            ScpCount[Ply.Role] = 1;
+                        }
+                        else
+                        {
+                            ScpCount[Ply.Role]++;
+                        }
+                    }
+                    foreach (KeyValuePair<RoleType, int> item in ScpCount)
+                    {
+                        builder.Append(GetScpString(item.Key, item.Value));
                         builder.Append(" . ");
                     }
                 }
@@ -97,9 +113,21 @@ namespace Scanner
                 Timing.CallDelayed(0.3f + plugin.Config.AnnounceScpsDelay, () =>
                 {
                     StringBuilder scpList = new StringBuilder();
-                    foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP && Ply.Role != RoleType.Scp0492))
+                    Dictionary<RoleType, int> ScpCount = new Dictionary<RoleType, int> { };
+                    foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP))
                     {
-                        scpList.Append(GetScpString(Ply.Role));
+                        if (!ScpCount.ContainsKey(Ply.Role))
+                        {
+                            ScpCount[Ply.Role] = 1;
+                        }
+                        else
+                        {
+                            ScpCount[Ply.Role]++;
+                        }
+                    }
+                    foreach (KeyValuePair<RoleType, int> item in ScpCount)
+                    {
+                        scpList.Append(GetScpString(item.Key, item.Value));
                         scpList.Append(" . ");
                     }
                     string str = (GetNumPlayersInTeam(Team.SCP) > 1 ? plugin.Config.ScpAnnounceStringMultiple : plugin.Config.ScpAnnounceStringSingular).Replace("{list}", scpList.ToString());

@@ -19,6 +19,7 @@ namespace Scanner
         public string ScanStartMessage { get; set; } = "FACILITY SCAN BEGUN . ESTIMATED TIME {length} SECONDS";
         public int ScanLength { get; set; } = 30;
         public string ScanFinishMessage { get; set; } = "FACILITY SCAN COMPLETE . {humanCount} HUMANS DETECTED . {scpCount} SCPS DETECTED . FOUND {list}";
+        public string ScanNobodyMessage { get; set; } = "FACILITY SCAN COMPLETE . {humanCount} HUMANS DETECTED . {scpCount} SCPS DETECTED";
         public bool IncludeScpListInScan { get; set; } = true;
         public Dictionary<Team, string> TeamPronounciationSingular { get; set; } = new Dictionary<Team, string>
         {
@@ -36,6 +37,18 @@ namespace Scanner
             [Team.SCP] = "SCPSUBJECTS",
             [Team.MTF] = "MTFUNITS",
             [Team.CHI] = "CHAOS INSURGENTS",
+        };
+
+        public Dictionary<RoleType, string> ScpPronounciation { get; set; } = new Dictionary<RoleType, string>
+        {
+            [RoleType.Scp049] = "SCP 0 4 9",
+            [RoleType.Scp0492] = "SCP 0 4 9 2",
+            [RoleType.Scp079] = "SCP 0 7 9",
+            [RoleType.Scp096] = "SCP 0 9 6",
+            [RoleType.Scp106] = "SCP 1 0 6",
+            [RoleType.Scp173] = "SCP 1 7 3",
+            [RoleType.Scp93953] = "SCP 9 3 9 5 3",
+            [RoleType.Scp93989] = "SCP 9 3 9 8 9",
         };
     }
 }
