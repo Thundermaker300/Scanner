@@ -11,7 +11,6 @@ namespace Scanner
     {
         public static Plugin Singleton;
         private EventHandlers handler;
-        public static bool SerpentsHandEnabled = false;
         public static bool ScanInProgress = false;
         public static bool Force = false;
         public override void OnEnabled()
@@ -21,19 +20,6 @@ namespace Scanner
 
             Handlers.Server.RoundStarted += handler.OnRoundStarted;
             Handlers.Server.RoundEnded += handler.OnRoundEnded;
-
-            foreach (var p in Loader.Plugins)
-            {
-                if (p.Name == "SerpentsHand")
-                {
-                    SerpentsHandEnabled = true;
-                }
-            }
-
-            if (!SerpentsHandEnabled)
-            {
-                Log.Info("Serpent's hand not enabled!");
-            }
 
             base.OnEnabled();
         }
