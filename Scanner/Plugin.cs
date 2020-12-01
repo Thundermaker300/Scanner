@@ -1,14 +1,9 @@
-﻿using Exiled.API.Enums;
+﻿using System;
+
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Loader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Handlers = Exiled.Events.Handlers;
-using MEC;
 
 namespace Scanner
 {

@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Exiled.API.Features;
 using Exiled.Loader;
 using Exiled.Events.EventArgs;
 using MEC;
-using System.Reflection;
-using System.IO;
 
 namespace Scanner
 {
