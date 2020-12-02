@@ -50,7 +50,7 @@ namespace Scanner
             {
                 return string.Empty;
             }
-            return $"{amount} {(amount > 1 ? plugin.Config.TeamPronounciationPlural[t] : plugin.Config.TeamPronounciationSingular[t])} . ";
+            return $"{amount} {(amount > 1 ? plugin.Config.TeamPronounciationMultiple[t] : plugin.Config.TeamPronounciationSingular[t])} . ";
         }
 
         public static string GetScpString(RoleType rt, int amount) => $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Config.ScpPronounciation[rt]}";

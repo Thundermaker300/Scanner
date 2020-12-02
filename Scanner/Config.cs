@@ -44,7 +44,7 @@ namespace Scanner
             [Team.CHI] = "CHAOS INSURGENT",
         };
         [Description("Determines how cassie will pronounce plural classes (eg. '4 SCIENTISTS').")]
-        public Dictionary<Team, string> TeamPronounciationPlural { get; set; } = new Dictionary<Team, string>
+        public Dictionary<Team, string> TeamPronounciationMultiple { get; set; } = new Dictionary<Team, string>
         {
             [Team.CDP] = "CLASS D PERSONNEL",
             [Team.RSC] = "SCIENTISTS",
