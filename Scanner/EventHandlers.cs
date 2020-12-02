@@ -51,16 +51,7 @@ namespace Scanner
             return $"{amount} {(amount > 1 ? plugin.Config.TeamPronounciationPlural[t] : plugin.Config.TeamPronounciationSingular[t])} . ";
         }
 
-        public static string GetScpString(RoleType rt, int amount) /*
-        {
-            StringBuilder scpList = new StringBuilder();
-            scpList.Append("SCP ");
-            foreach (char c in rt.ToString().Substring(2))
-            {
-                scpList.Append($"{c} ");
-            }
-            return scpList.ToString();
-        }*/ => $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Config.ScpPronounciation[rt]}";
+        public static string GetScpString(RoleType rt, int amount) => $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Config.ScpPronounciation[rt]}";
 
         public static void Scan()
         {
