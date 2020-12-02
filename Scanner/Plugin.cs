@@ -31,6 +31,8 @@ namespace Scanner
             Handlers.Server.RoundStarted -= handler.OnRoundStarted;
             Handlers.Server.RoundEnded -= handler.OnRoundEnded;
 
+            Handlers.Warhead.Detonated -= handler.OnDetonated;
+
             handler = null;
             Singleton = null;
             base.OnDisabled();
