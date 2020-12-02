@@ -29,7 +29,7 @@ namespace Scanner
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed.")]
         public string ScanFinishMessage { get; set; } = "FACILITY SCAN COMPLETE . {humanCount} HUMANS DETECTED . {scpCount} SCPS DETECTED . FOUND {list}";
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed and nobody is alive.")]
-        public string ScanNobodyMessage { get; set; } = "FACILITY SCAN COMPLETE . {humanCount} HUMANS DETECTED . {scpCount} SCPS DETECTED";
+        public string ScanNobodyMessage { get; set; } = "FACILITY SCAN COMPLETE . NO HUMANS OR SCPS DETECTED";
         [Description("Determines if a list of SCPs will be included at the end of the scan.")]
         public bool IncludeScpListInScan { get; set; } = true;
         [Description("Determines how cassie will pronounce single classes (eg. '1 SCIENTIST').")]
