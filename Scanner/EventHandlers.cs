@@ -179,5 +179,16 @@ namespace Scanner
                 Timing.KillCoroutines(CHandle);
             }
         }
+
+        public void OnDetonated()
+        {
+            if (plugin.Config.ScanAfterNuke == false)
+            {
+                foreach (CoroutineHandle CHandle in Coroutines)
+                {
+                    Timing.KillCoroutines(CHandle);
+                }
+            }
+        }
     }
 }

@@ -32,6 +32,8 @@ namespace Scanner
         public string ScanNobodyMessage { get; set; } = "FACILITY SCAN COMPLETE . NO HUMANS OR SCPS DETECTED";
         [Description("Determines if a list of SCPs will be included at the end of the scan.")]
         public bool IncludeScpListInScan { get; set; } = true;
+        [Description("If set to false, scanning will be disabled after the nuke has been detonated.")]
+        public bool ScanAfterNuke { get; set; } = false;
         [Description("Determines how cassie will pronounce single classes (eg. '1 SCIENTIST').")]
         public Dictionary<Team, string> TeamPronounciationSingular { get; set; } = new Dictionary<Team, string>
         {
