@@ -1,6 +1,11 @@
 # Scanner
 An SCP:SL plugin that scans the facility and announces who is still alive. Requires Exiled 2.1.18 or higher.
 
+## Supported Plugins
+* [SCP-035](https://github.com/Cyanox62/scp035) (SCP-035 will be announced if `include_scp_list_in_scan` is set to `true`)
+* [Serpent's Hand](https://github.com/Cyanox62/SerpentsHand) (Serpent's Hand will be announced with the rest of the human classes)
+* [GhostSpectator](https://github.com/Thundermaker300/GhostSpectator) (Ghosts will not be announced at all)
+
 ## Config
 | Name                         | Type                         | Description                                                                                                                                                                                             |
 |------------------------------|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -21,8 +26,3 @@ An SCP:SL plugin that scans the facility and announces who is still alive. Requi
 | team_pronounciation_singular | Dictionary<RoleType, string> | Determines how C.A.S.S.I.E pronounces single teams (eg. 1 SCIENTIST).                                                                                                                                   |
 | team_pronounciation_multiple | Dictionary<RoleType, string> | Determines how C.A.S.S.I.E pronounces plural teams (eg. 5 SCIENTISTS).                                                                                                                                  |
 | scp_pronounciation           | Dictionary<RoleType, string> | Determines how C.A.S.S.I.E pronounces SCPs.                                                                                                                                                             |
-
-## Supported Plugins
-* [SCP-035](https://github.com/Cyanox62/scp035)
-* [Serpent's Hand](https://github.com/Cyanox62/SerpentsHand)
-* [GhostSpectator](https://github.com/Thundermaker300/GhostSpectator)
