@@ -63,38 +63,29 @@ namespace Scanner
 
         public static void Scan()
         {
-            Log.Info(2);
             try
             {
                 StringBuilder builder = new StringBuilder();
-                Log.Info(2.5);
                 foreach (Team t in GetAliveTeams())
                 {
                     if (t == Team.SCP) continue;
                     builder.Append(GetCassieMessage(t));
                 }
-                Log.Info(3);
                 // SH Support
                 var SHPlayers = ((List<Player>)Loader.Plugins.FirstOrDefault(pl => pl.Name == "SerpentsHand")?.Assembly.GetType("SerpentsHand.API.SerpentsHand")?.GetMethod("GetSHPlayers")?.Invoke(null, null))?.Count ?? 0;
-                Log.Info(4);
                 if (SHPlayers > 0)
                 {
                     builder.Append($"{SHPlayers} SERPENTS HAND . ");
                 }
-                Log.Info(5);
                 if (plugin.Config.IncludeScpListInScan == true)
                 {
                     // SCP-035 support
-                    Log.Info(6);
                     Player Scp035 = Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) as Player;
-                    Log.Info(7);
                     if (Scp035 != null)
                     {
                         builder.Append("SCP 0 3 5 . ");
                     }
-                    Log.Info(8);
                     Dictionary<RoleType, int> ScpCount = new Dictionary<RoleType, int> { };
-                    Log.Info(9);
                     foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP))
                     {
                         if (!ScpCount.ContainsKey(Ply.Role))
@@ -106,28 +97,21 @@ namespace Scanner
                             ScpCount[Ply.Role]++;
                         }
                     }
-                    Log.Info(10);
                     foreach (KeyValuePair<RoleType, int> item in ScpCount)
                     {
                         builder.Append(GetScpString(item.Key, item.Value));
                         builder.Append(" . ");
                     }
-                    Log.Info(11);
                 }
-                Log.Info(12);
                 string list = builder.ToString();
                 if (builder.Length == 0)
                 {
-                    Log.Info("13-A");
                     Cassie.Message(plugin.Config.ScanNobodyMessage);
                 }
                 else
                 {
-                    Log.Info("13-B");
                     int numberHuman = Player.List.Count(Ply => Ply.IsAlive && Ply.Team != Team.SCP && Ply.Team != Team.TUT && !IsGhost(Ply)) + (((List<Player>)Loader.Plugins.FirstOrDefault(pl => pl.Name == "SerpentsHand")?.Assembly.GetType("SerpentsHand.API.SerpentsHand")?.GetMethod("GetSHPlayers")?.Invoke(null, null))?.Count ?? 0) - (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
-                    Log.Info("14-B");
                     int numberSCPs = Player.List.Count(Ply => Ply.Team == Team.SCP && !IsGhost(Ply)) + (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
-                    Log.Info("15-B");
                     Cassie.Message(plugin.Config.ScanFinishMessage.Replace("{humanCount}", numberHuman.ToString()).Replace("{scpCount}", numberSCPs.ToString()).Replace("{list}", list));
 
                 }
@@ -154,9 +138,7 @@ namespace Scanner
                 }
                 Plugin.ScanInProgress = true;
                 Cassie.Message(plugin.Config.ScanStartMessage.Replace("{length}", plugin.Config.ScanLength.ToString()));
-                Log.Info(0);
                 yield return Timing.WaitForSeconds(plugin.Config.ScanLength);
-                Log.Info(1);
                 Scan();
             }
         }
