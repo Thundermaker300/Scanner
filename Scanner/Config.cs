@@ -21,7 +21,7 @@ namespace Scanner
         public string ScpAnnounceStringMultiple { get; set; } = "{list} HAVE BREACHED CONTAINMENT";
         [Description("Determines whether or not to regularly scan and announce who is alive.")]
         public bool RegularScanning { get; set; } = true;
-        [Description("Determines the C.A.S.S.I.E length of time between each scan (and before the 1st scan) each round.")]
+        [Description("Determines the length of time between each scan (and before the 1st scan) each round.")]
         public int LengthBetweenScans { get; set; } = 300;
         [Description("Determines the C.A.S.S.I.E string to use when the scan is started.")]
         public string ScanStartMessage { get; set; } = "FACILITY SCAN BEGUN . ESTIMATED TIME {length} SECONDS";
