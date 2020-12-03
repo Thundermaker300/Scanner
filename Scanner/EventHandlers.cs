@@ -35,7 +35,7 @@ namespace Scanner
             int amount = 0;
             foreach (Player Ply in Player.List)
             {
-                if (Ply.Team == t && /* GhostSpectator */ !IsGhost(Ply) && /* SCP-035 */ Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply)
+                if (plugin.Config.ScanZones.Contains(Ply.CurrentRoom.Zone) && Ply.Team == t && /* GhostSpectator */ !IsGhost(Ply) && /* SCP-035 */ Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply)
                 {
                     amount++;
                 }
