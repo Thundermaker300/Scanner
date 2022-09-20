@@ -21,9 +21,9 @@ namespace Scanner
             List<Team> AliveRoles = new List<Team> { };
             foreach (Player Ply in Player.List)
             {
-                if (Ply.IsAlive && Ply.Team != Team.TUT && !AliveRoles.Contains(Ply.Team))
+                if (Ply.IsAlive && Ply.Role.Team is not Team.TUT && !AliveRoles.Contains(Ply.Role.Team))
                 {
-                    AliveRoles.Add(Ply.Team);
+                    AliveRoles.Add(Ply.Role.Team);
                 }
             }
             return AliveRoles;
@@ -41,7 +41,7 @@ namespace Scanner
             int amount = 0;
             foreach (Player Ply in Player.List)
             {
-                if (plugin.Config.ScanZones.Contains(Ply.CurrentRoom.Zone) && Ply.Team == t && /* GhostSpectator */ !IsGhost(Ply) && /* SCP-035 */ Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply)
+                if (plugin.Config.ScanZones.Contains(Ply.CurrentRoom.Zone) && Ply.Role.Team == t && /* GhostSpectator */ !IsGhost(Ply) && /* SCP-035 */ Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply)
                 {
                     amount++;
                 }
@@ -86,7 +86,7 @@ namespace Scanner
                         builder.Append("SCP 0 3 5 . ");
                     }
                     Dictionary<RoleType, int> ScpCount = new Dictionary<RoleType, int> { };
-                    foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP))
+                    foreach (Player Ply in Player.List.Where(Ply => Ply.Role.Team is Team.SCP))
                     {
                         if (!ScpCount.ContainsKey(Ply.Role))
                         {
@@ -110,8 +110,8 @@ namespace Scanner
                 }
                 else
                 {
-                    int numberHuman = Player.List.Count(Ply => Ply.IsAlive && Ply.Team != Team.SCP && Ply.Team != Team.TUT && !IsGhost(Ply)) + (((List<Player>)Loader.Plugins.FirstOrDefault(pl => pl.Name == "SerpentsHand")?.Assembly.GetType("SerpentsHand.API.SerpentsHand")?.GetMethod("GetSHPlayers")?.Invoke(null, null))?.Count ?? 0) - (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
-                    int numberSCPs = Player.List.Count(Ply => Ply.Team == Team.SCP && !IsGhost(Ply)) + (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
+                    int numberHuman = Player.List.Count(Ply => Ply.IsAlive && Ply.Role.Team != Team.SCP && Ply.Role.Team != Team.TUT && !IsGhost(Ply)) + (((List<Player>)Loader.Plugins.FirstOrDefault(pl => pl.Name == "SerpentsHand")?.Assembly.GetType("SerpentsHand.API.SerpentsHand")?.GetMethod("GetSHPlayers")?.Invoke(null, null))?.Count ?? 0) - (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
+                    int numberSCPs = Player.List.Count(Ply => Ply.Role.Team == Team.SCP && !IsGhost(Ply)) + (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
                     Cassie.Message(plugin.Config.ScanFinishMessage.Replace("{humanCount}", numberHuman.ToString()).Replace("{scpCount}", numberSCPs.ToString()).Replace("{list}", list));
 
                 }
@@ -155,7 +155,7 @@ namespace Scanner
                 {
                     StringBuilder scpList = new StringBuilder();
                     Dictionary<RoleType, int> ScpCount = new Dictionary<RoleType, int> { };
-                    foreach (Player Ply in Player.List.Where(Ply => Ply.Team == Team.SCP))
+                    foreach (Player Ply in Player.List.Where(Ply => Ply.Role.Team == Team.SCP))
                     {
                         if (!ScpCount.ContainsKey(Ply.Role))
                         {
@@ -166,7 +166,7 @@ namespace Scanner
                             ScpCount[Ply.Role]++;
                         }
                     }
-                    if (ScpCount.Count() < 1)
+                    if (ScpCount.Count < 1)
                     {
                         return;
                     }
