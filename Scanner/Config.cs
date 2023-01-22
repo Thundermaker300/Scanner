@@ -19,19 +19,19 @@ namespace Scanner
         [Description("Determines the amount of seconds that will pass before SCPs are announced at the start.")]
         public int AnnounceScpsDelay { get; set; } = 3;
         [Description("Determines the C.A.S.S.I.E string to use when there is one breached SCP.")]
-        public string ScpAnnounceStringSingular { get; set; } = "{list} HAS BREACHED CONTAINMENT.";
+        public string ScpAnnounceStringSingular { get; set; } = "{LIST} HAS BREACHED CONTAINMENT.";
         [Description("Determines the C.A.S.S.I.E string to use when there is more than one breached SCP.")]
-        public string ScpAnnounceStringMultiple { get; set; } = "{list} HAVE BREACHED CONTAINMENT";
+        public string ScpAnnounceStringMultiple { get; set; } = "{LIST} HAVE BREACHED CONTAINMENT";
         [Description("Determines whether or not to regularly scan and announce who is alive.")]
         public bool RegularScanning { get; set; } = true;
         [Description("Determines the length of time between each scan (and before the 1st scan) each round.")]
         public int LengthBetweenScans { get; set; } = 300;
         [Description("Determines the C.A.S.S.I.E string to use when the scan is started.")]
-        public string ScanStartMessage { get; set; } = "FACILITY SCAN BEGUN . ESTIMATED TIME {length} SECONDS";
+        public string ScanStartMessage { get; set; } = "FACILITY SCAN BEGUN . ESTIMATED TIME {LENGTH} SECONDS";
         [Description("Determines the length of time a scan takes to complete.")]
         public int ScanLength { get; set; } = 30;
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed.")]
-        public string ScanFinishMessage { get; set; } = "FACILITY SCAN COMPLETE . {humanCount} HUMANS DETECTED . {scpCount} SCPS DETECTED . FOUND {list}";
+        public string ScanFinishMessage { get; set; } = "FACILITY SCAN COMPLETE . {HUMANCOUNT} HUMANS DETECTED . {SCPCOUNT} SCPS DETECTED . FOUND {LIST}";
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed and nobody is alive.")]
         public string ScanNobodyMessage { get; set; } = "FACILITY SCAN COMPLETE . NO HUMANS OR SCPS DETECTED";
         [Description("Determines if a list of SCPs will be included at the end of the scan.")]
