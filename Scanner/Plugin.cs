@@ -40,8 +40,8 @@ namespace Scanner
 
         public override string Name => "Scanner";
         public override string Author => "Thunder";
-        public override Version Version => new Version(1, 1, 0);
-        public override Version RequiredExiledVersion => new Version(5, 3, 0);
+        public override Version Version => new Version(1, 2, 0);
+        public override Version RequiredExiledVersion => new Version(6, 0, 0);
         public override PluginPriority Priority => PluginPriority.High;
     }
 }
