@@ -32,10 +32,11 @@ namespace Scanner
         }
 
         /* GhostSpectator */ private static bool IsGhost(Player Ply)
-        {
+        {/*
             Assembly assembly = Loader.Plugins.FirstOrDefault(pl => pl.Name == "GhostSpectator")?.Assembly;
             if (assembly == null) return false;
-            return ((bool)assembly.GetType("GhostSpectator.API")?.GetMethod("IsGhost")?.Invoke(null, new object[] { Ply })) == true;
+            return ((bool)assembly.GetType("GhostSpectator.API")?.GetMethod("IsGhost")?.Invoke(null, new object[] { Ply })) == true;*/
+            return false;
         }
 
         private static int GetNumPlayersInTeam(Team t)
@@ -82,11 +83,11 @@ namespace Scanner
                 if (plugin.Config.IncludeScpListInScan == true)
                 {
                     // SCP-035 support
-                    Player Scp035 = Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) as Player;
+                    /*Player Scp035 = Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) as Player;
                     if (Scp035 != null)
                     {
                         builder.Append("SCP 0 3 5 . ");
-                    }
+                    }*/
                     Dictionary<RoleTypeId, int> ScpCount = new Dictionary<RoleTypeId, int> { };
                     foreach (Player Ply in Player.List.Where(Ply => Ply.Role.Team is Team.SCPs))
                     {
@@ -113,7 +114,7 @@ namespace Scanner
                 else
                 {
                     int numberHuman = Player.List.Count(Ply => Ply.IsAlive && Ply.Role.Team != Team.SCPs && Ply.Role.Team != Team.OtherAlive && !IsGhost(Ply)) + Player.Get(ply => ply.SessionVariables.ContainsKey("IsSH")).Count();
-                    int numberSCPs = Player.List.Count(Ply => Ply.Role.Team == Team.SCPs && !IsGhost(Ply)) + (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0);
+                    int numberSCPs = Player.List.Count(Ply => Ply.Role.Team == Team.SCPs && !IsGhost(Ply)) /*+ (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0)*/;
                     Cassie.Message(plugin.Config.ScanFinishMessage.Replace("{HUMANCOUNT}", numberHuman.ToString()).Replace("{SCPCOUNT}", numberSCPs.ToString()).Replace("{LIST}", list));
 
                 }
