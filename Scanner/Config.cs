@@ -4,6 +4,7 @@ using System.ComponentModel;
 
 using Exiled.API.Interfaces;
 using Exiled.API.Enums;
+using PlayerRoles;
 
 namespace Scanner
 {
@@ -11,6 +12,8 @@ namespace Scanner
     {
         [Description("Determines whether or not the plugin is enabled.")]
         public bool IsEnabled { get; set; } = true;
+        [Description("Whether or not to show debug logs.")]
+        public bool Debug { get; set; } = true;
         [Description("Determines whether or not the SCPs that have breached will be announced at the start.")]
         public bool AnnounceScpsAtStart { get; set; } = false;
         [Description("Determines the amount of seconds that will pass before SCPs are announced at the start.")]
@@ -40,33 +43,32 @@ namespace Scanner
         [Description("Determines how cassie will pronounce single classes (eg. '1 SCIENTIST').")]
         public Dictionary<Team, string> TeamPronounciationSingular { get; set; } = new Dictionary<Team, string>
         {
-            [Team.CDP] = "CLASS D PERSONNEL",
-            [Team.RSC] = "SCIENTIST",
-            [Team.SCP] = "SCPSUBJECT",
-            [Team.MTF] = "MTFUNIT",
-            [Team.CHI] = "CHAOS INSURGENT",
+            [Team.ClassD] = "CLASS D PERSONNEL",
+            [Team.Scientists] = "SCIENTIST",
+            [Team.SCPs] = "SCPSUBJECT",
+            [Team.FoundationForces] = "MTFUNIT",
+            [Team.ChaosInsurgency] = "CHAOS INSURGENT",
         };
         [Description("Determines how cassie will pronounce plural classes (eg. '4 SCIENTISTS').")]
         public Dictionary<Team, string> TeamPronounciationMultiple { get; set; } = new Dictionary<Team, string>
         {
-            [Team.CDP] = "CLASS D PERSONNEL",
-            [Team.RSC] = "SCIENTISTS",
-            [Team.SCP] = "SCPSUBJECTS",
-            [Team.MTF] = "MTFUNITS",
-            [Team.CHI] = "CHAOS INSURGENTS",
+            [Team.ClassD] = "CLASS D PERSONNEL",
+            [Team.Scientists] = "SCIENTISTS",
+            [Team.SCPs] = "SCPSUBJECTS",
+            [Team.FoundationForces] = "MTFUNITS",
+            [Team.ChaosInsurgency] = "CHAOS INSURGENTS",
         };
 
         [Description("Determines how cassie will pronounce SCPs.")]
-        public Dictionary<RoleType, string> ScpPronounciation { get; set; } = new Dictionary<RoleType, string>
+        public Dictionary<RoleTypeId, string> ScpPronounciation { get; set; } = new Dictionary<RoleTypeId, string>
         {
-            [RoleType.Scp049] = "SCP 0 4 9",
-            [RoleType.Scp0492] = "SCP 0 4 9 2",
-            [RoleType.Scp079] = "SCP 0 7 9",
-            [RoleType.Scp096] = "SCP 0 9 6",
-            [RoleType.Scp106] = "SCP 1 0 6",
-            [RoleType.Scp173] = "SCP 1 7 3",
-            [RoleType.Scp93953] = "SCP 9 3 9 5 3",
-            [RoleType.Scp93989] = "SCP 9 3 9 8 9",
+            [RoleTypeId.Scp049] = "SCP 0 4 9",
+            [RoleTypeId.Scp0492] = "SCP 0 4 9 2",
+            [RoleTypeId.Scp079] = "SCP 0 7 9",
+            [RoleTypeId.Scp096] = "SCP 0 9 6",
+            [RoleTypeId.Scp106] = "SCP 1 0 6",
+            [RoleTypeId.Scp173] = "SCP 1 7 3",
+            [RoleTypeId.Scp939] = "SCP 9 3 9",
         };
     }
 }
