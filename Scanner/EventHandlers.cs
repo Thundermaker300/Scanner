@@ -44,7 +44,7 @@ namespace Scanner
             int amount = 0;
             foreach (Player Ply in Player.List)
             {
-                if (plugin.Config.ScanZones.Contains(Ply.CurrentRoom.Zone) && Ply.Role.Team == t && /* GhostSpectator */ !IsGhost(Ply) && /* SCP-035 */ Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply)
+                if (Ply.CurrentRoom != null && plugin.Config.ScanZones.Contains(Ply.CurrentRoom.Zone) && Ply.Role.Team == t && /* GhostSpectator */ !IsGhost(Ply) /*&&*/ /* SCP-035 */ /*Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply*/)
                 {
                     amount++;
                 }
@@ -148,6 +148,7 @@ namespace Scanner
 
         public void OnRoundStarted()
         {
+            Plugin.ScanInProgress = false;
             foreach (CoroutineHandle CHandle in Coroutines)
             {
                 Timing.KillCoroutines(CHandle);
@@ -194,6 +195,7 @@ namespace Scanner
             {
                 Timing.KillCoroutines(CHandle);
             }
+            Plugin.ScanInProgress = false;
         }
 
         public void OnDetonated()
