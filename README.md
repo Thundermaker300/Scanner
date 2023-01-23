@@ -3,12 +3,12 @@
 [![DISCORD](https://img.shields.io/discord/1060274824330620979?label=Discord&style=for-the-badge)](https://discord.gg/3j54zBnbbD)
 
 # Scanner
-An SCP:SL plugin that scans the facility and announces who is still alive. Requires Exiled 2.1.18 or higher.
+An SCP:SL plugin that scans the facility and announces who is still alive. Requires Exiled 6.0.
 
 ## Supported Plugins
-* [SCP-035](https://github.com/Cyanox62/scp035) (SCP-035 will be announced if `include_scp_list_in_scan` is set to `true`) **(WAITING FOR UPDATE TO PLUGIN)**
-* [Serpent's Hand](https://github.com/Cyanox62/SerpentsHand) (Serpent's Hand will be announced with the rest of the human classes)
-* [GhostSpectator](https://github.com/Thundermaker300/GhostSpectator) (Ghosts will not be announced at all) **(WAITING FOR UPDATE TO PLUGIN)**
+* [SCP-035](https://github.com/Exiled-Team/scp035) (SCP-035 will be announced if `include_scp_list_in_scan` is set to `true`) **(WAITING FOR UPDATE TO PLUGIN)**
+* [Serpent's Hand](https://github.com/Exiled-Team/SerpentsHand) (Serpent's Hand will be announced with the rest of the human classes)
+* GhostSpectator (Ghosts will not be announced at all) **(WAITING FOR UPDATE TO PLUGIN)**
 
 ## Config
 | Name                         | Type                         | Description                                                                                                                                                                                             |
