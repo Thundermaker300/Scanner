@@ -1,3 +1,7 @@
+![VERSION](https://img.shields.io/github/v/release/Thundermaker300/Scanner?include_prereleases&style=for-the-badge)
+![DOWNLOADS](https://img.shields.io/github/downloads/Thundermaker300/Scanner/total?style=for-the-badge)
+[![DISCORD](https://img.shields.io/discord/1060274824330620979?label=Discord&style=for-the-badge)](https://discord.gg/3j54zBnbbD)
+
 # Scanner
 An SCP:SL plugin that scans the facility and announces who is still alive. Requires Exiled 2.1.18 or higher.
 
