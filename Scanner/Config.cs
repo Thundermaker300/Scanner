@@ -29,6 +29,6 @@ namespace Scanner
         [Description("If set to false, scanning will be disabled after the nuke has been detonated.")]
         public bool ScanAfterNuke { get; set; } = false;
         [Description("Determines which zones will be scanned.")]
-        public List<ZoneType> ScanZones { get; set; } = new List<ZoneType> { ZoneType.LightContainment, ZoneType.HeavyContainment, ZoneType.Entrance, ZoneType.HeavyContainment | ZoneType.Entrance, ZoneType.Surface };
+        public List<ZoneType> ScanZones { get; set; } = new List<ZoneType> { ZoneType.LightContainment, ZoneType.HeavyContainment, ZoneType.Entrance, ZoneType.Surface };
     }
 }

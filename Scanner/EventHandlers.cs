@@ -12,6 +12,7 @@ using PlayerRoles;
 using Exiled.Events.EventArgs.Server;
 using Scanner.Structures;
 using Exiled.API.Features.Pools;
+using Exiled.API.Enums;
 
 namespace Scanner
 {
@@ -47,9 +48,19 @@ namespace Scanner
             int amount = 0;
             foreach (Player Ply in Player.List)
             {
-                if (Ply.CurrentRoom != null && plugin.Config.ScanZones.Contains(Ply.CurrentRoom.Zone) && Ply.Role.Team == t && /* GhostSpectator */ !IsGhost(Ply) /*&&*/ /* SCP-035 */ /*Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply*/)
+                if (Ply.CurrentRoom != null && Ply.Role.Team == t && /* GhostSpectator */ !IsGhost(Ply) /*&&*/ /* SCP-035 */ /*Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != Ply*/)
                 {
-                    amount++;
+                    bool count = false;
+                    foreach (ZoneType zt in plugin.Config.ScanZones)
+                    {
+                        if (Ply.CurrentRoom.Zone.HasFlag(zt))
+                        {
+                            count = true;
+                        }
+                    }
+
+                    if (count)
+                        amount++;
                 }
             }
             return amount;
