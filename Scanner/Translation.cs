@@ -32,7 +32,7 @@ namespace Scanner
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed.")]
         public CassieMessage ScanFinishMessage { get; set; } = new(
             "FACILITY SCAN COMPLETE . {HUMANCOUNT} HUMANS DETECTED . {SCPCOUNT} SCPS DETECTED . FOUND {LIST}",
-            "Facility scan complete. {HUMANCOUNT} humans detected. {SCPCOUNT} SCPs detected. FOUND {LIST}."
+            "Facility scan complete. {HUMANCOUNT} humans detected. {SCPCOUNT} SCPs detected. Found {LIST}."
         );
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed and nobody is alive.")]
         public CassieMessage ScanNobodyMessage { get; set; } = new(

@@ -130,6 +130,7 @@ namespace Scanner
                 }
                 else
                 {
+                    listCaption = listCaption.Substring(0, listCaption.Length - 2); // Remove stray comma
                     int numberHuman = Player.List.Count(Ply => Ply.IsAlive && Ply.Role.Team != Team.SCPs && Ply.Role.Team != Team.OtherAlive && !IsGhost(Ply)) + Player.Get(ply => ply.SessionVariables.ContainsKey("IsSH")).Count();
                     int numberSCPs = Player.List.Count(Ply => Ply.Role.Team == Team.SCPs && !IsGhost(Ply)) /*+ (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0)*/;
                     Cassie.MessageTranslated(
