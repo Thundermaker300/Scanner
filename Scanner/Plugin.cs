@@ -7,7 +7,7 @@ using Handlers = Exiled.Events.Handlers;
 
 namespace Scanner
 {
-    public class Plugin : Plugin<Config>
+    public class Plugin : Plugin<Config, Translation>
     {
         public static Plugin Singleton;
         private EventHandlers handler;

@@ -10,6 +10,7 @@ using Exiled.Events.EventArgs;
 using MEC;
 using PlayerRoles;
 using Exiled.Events.EventArgs.Server;
+using Scanner.Structures;
 
 namespace Scanner
 {
@@ -52,33 +53,43 @@ namespace Scanner
             return amount;
         }
 
-        public static string GetCassieMessage(Team t)
+        public static CassieMessage GetCassieMessage(Team t)
         {
             int amount = GetNumPlayersInTeam(t);
             if (amount == 0)
             {
-                return string.Empty;
+                return new(string.Empty, string.Empty);
             }
-            return $"{amount} {(amount > 1 ? plugin.Config.TeamPronounciationMultiple[t] : plugin.Config.TeamPronounciationSingular[t])} . ";
+            return new(
+                $"{amount} {(amount > 1 ? plugin.Translation.TeamPronounciationMultiple[t].CassieText : plugin.Translation.TeamPronounciationSingular[t].CassieText)} . ",
+                $"{amount} {(amount > 1 ? plugin.Translation.TeamPronounciationMultiple[t].CaptionText : plugin.Translation.TeamPronounciationSingular[t].CaptionText)}, "
+            );
         }
 
-        public static string GetScpString(RoleTypeId rt, int amount) => $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Config.ScpPronounciation[rt]}";
+        public static CassieMessage GetScpString(RoleTypeId rt, int amount) => new(
+            $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Translation.ScpPronounciation[rt].CassieText}",
+            $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Translation.ScpPronounciation[rt].CaptionText}"
+        );
 
         public static void Scan()
         {
             try
             {
-                StringBuilder builder = new StringBuilder();
+                StringBuilder builderCassie = new StringBuilder();
+                StringBuilder builderCaption = new StringBuilder();
                 foreach (Team t in GetAliveTeams())
                 {
                     if (t == Team.SCPs) continue;
-                    builder.Append(GetCassieMessage(t));
+                    CassieMessage message = GetCassieMessage(t);
+                    builderCassie.Append(message.CassieText);
+                    builderCaption.Append(message.CaptionText);
                 }
                 // SH Support
                 var SHPlayers = Player.Get(ply => ply.SessionVariables.ContainsKey("IsSH"));
                 if (SHPlayers.Count() > 0)
                 {
-                    builder.Append($"{SHPlayers.Count()} SERPENTS HAND . ");
+                    builderCassie.Append($"{SHPlayers.Count()} SERPENTS HAND . ");
+                    builderCaption.Append($"{SHPlayers.Count()} Serpent's Hand, ");
                 }
                 if (plugin.Config.IncludeScpListInScan == true)
                 {
@@ -102,20 +113,27 @@ namespace Scanner
                     }
                     foreach (KeyValuePair<RoleTypeId, int> item in ScpCount)
                     {
-                        builder.Append(GetScpString(item.Key, item.Value));
-                        builder.Append(" . ");
+                        CassieMessage message = GetScpString(item.Key, item.Value);
+                        builderCassie.Append(message.CassieText);
+                        builderCassie.Append(" . ");
+
+                        builderCaption.Append($"{message.CaptionText}, ");
                     }
                 }
-                string list = builder.ToString();
-                if (builder.Length == 0)
+                string listCassie = builderCassie.ToString();
+                string listCaption = builderCaption.ToString();
+                if (listCassie.Length == 0)
                 {
-                    Cassie.Message(plugin.Config.ScanNobodyMessage);
+                    Cassie.MessageTranslated(plugin.Translation.ScanNobodyMessage.CassieText, plugin.Translation.ScanNobodyMessage.CaptionText);
                 }
                 else
                 {
                     int numberHuman = Player.List.Count(Ply => Ply.IsAlive && Ply.Role.Team != Team.SCPs && Ply.Role.Team != Team.OtherAlive && !IsGhost(Ply)) + Player.Get(ply => ply.SessionVariables.ContainsKey("IsSH")).Count();
                     int numberSCPs = Player.List.Count(Ply => Ply.Role.Team == Team.SCPs && !IsGhost(Ply)) /*+ (Loader.Plugins.FirstOrDefault(pl => pl.Name == "scp035")?.Assembly.GetType("scp035.API.Scp035Data")?.GetMethod("GetScp035")?.Invoke(null, null) != null ? 1 : 0)*/;
-                    Cassie.Message(plugin.Config.ScanFinishMessage.Replace("{HUMANCOUNT}", numberHuman.ToString()).Replace("{SCPCOUNT}", numberSCPs.ToString()).Replace("{LIST}", list));
+                    Cassie.MessageTranslated(
+                        plugin.Translation.ScanFinishMessage.CassieText.Replace("{HUMANCOUNT}", numberHuman.ToString()).Replace("{SCPCOUNT}", numberSCPs.ToString()).Replace("{LIST}", listCassie),
+                        plugin.Translation.ScanFinishMessage.CaptionText.Replace("{HUMANCOUNT}", numberHuman.ToString()).Replace("{SCPCOUNT}", numberSCPs.ToString()).Replace("{LIST}", listCaption)
+                    );
 
                 }
                 Plugin.ScanInProgress = false;

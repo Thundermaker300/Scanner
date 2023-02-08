@@ -30,45 +30,11 @@ namespace Scanner
         public string ScanStartMessage { get; set; } = "FACILITY SCAN BEGUN . ESTIMATED TIME {LENGTH} SECONDS";
         [Description("Determines the length of time a scan takes to complete.")]
         public int ScanLength { get; set; } = 30;
-        [Description("Determines the C.A.S.S.I.E string to use when the scan is completed.")]
-        public string ScanFinishMessage { get; set; } = "FACILITY SCAN COMPLETE . {HUMANCOUNT} HUMANS DETECTED . {SCPCOUNT} SCPS DETECTED . FOUND {LIST}";
-        [Description("Determines the C.A.S.S.I.E string to use when the scan is completed and nobody is alive.")]
-        public string ScanNobodyMessage { get; set; } = "FACILITY SCAN COMPLETE . NO HUMANS OR SCPS DETECTED";
         [Description("Determines if a list of SCPs will be included at the end of the scan.")]
         public bool IncludeScpListInScan { get; set; } = true;
         [Description("If set to false, scanning will be disabled after the nuke has been detonated.")]
         public bool ScanAfterNuke { get; set; } = false;
         [Description("Determines which zones will be scanned.")]
         public List<ZoneType> ScanZones { get; set; } = new List<ZoneType> { ZoneType.LightContainment, ZoneType.HeavyContainment, ZoneType.Entrance, ZoneType.HeavyContainment | ZoneType.Entrance, ZoneType.Surface };
-        [Description("Determines how cassie will pronounce single classes (eg. '1 SCIENTIST').")]
-        public Dictionary<Team, string> TeamPronounciationSingular { get; set; } = new Dictionary<Team, string>
-        {
-            [Team.ClassD] = "CLASS D PERSONNEL",
-            [Team.Scientists] = "SCIENTIST",
-            [Team.SCPs] = "SCPSUBJECT",
-            [Team.FoundationForces] = "MTFUNIT",
-            [Team.ChaosInsurgency] = "CHAOS INSURGENT",
-        };
-        [Description("Determines how cassie will pronounce plural classes (eg. '4 SCIENTISTS').")]
-        public Dictionary<Team, string> TeamPronounciationMultiple { get; set; } = new Dictionary<Team, string>
-        {
-            [Team.ClassD] = "CLASS D PERSONNEL",
-            [Team.Scientists] = "SCIENTISTS",
-            [Team.SCPs] = "SCPSUBJECTS",
-            [Team.FoundationForces] = "MTFUNITS",
-            [Team.ChaosInsurgency] = "CHAOS INSURGENTS",
-        };
-
-        [Description("Determines how cassie will pronounce SCPs.")]
-        public Dictionary<RoleTypeId, string> ScpPronounciation { get; set; } = new Dictionary<RoleTypeId, string>
-        {
-            [RoleTypeId.Scp049] = "SCP 0 4 9",
-            [RoleTypeId.Scp0492] = "SCP 0 4 9 2",
-            [RoleTypeId.Scp079] = "SCP 0 7 9",
-            [RoleTypeId.Scp096] = "SCP 0 9 6",
-            [RoleTypeId.Scp106] = "SCP 1 0 6",
-            [RoleTypeId.Scp173] = "SCP 1 7 3",
-            [RoleTypeId.Scp939] = "SCP 9 3 9",
-        };
     }
 }
