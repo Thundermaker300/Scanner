@@ -12,6 +12,23 @@ namespace Scanner
 {
     public class Translation : ITranslation
     {
+        [Description("Determines the C.A.S.S.I.E string to use when there is one breached SCP.")]
+        public CassieMessage ScpAnnounceStringSingular { get; set; } = new(
+            "{LIST} HAS BREACHED CONTAINMENT",
+            "{LIST} has breached containment."
+        );
+        [Description("Determines the C.A.S.S.I.E string to use when there is more than one breached SCP.")]
+        public CassieMessage ScpAnnounceStringMultiple { get; set; } = new(
+            "{LIST} HAVE BREACHED CONTAINMENT",
+            "{LIST} have breached containment."
+        );
+
+        [Description("Determines the C.A.S.S.I.E string to use when the scan is started.")]
+        public CassieMessage ScanStartMessage { get; set; } = new(
+            "FACILITY SCAN BEGUN . ESTIMATED TIME {LENGTH} SECONDS",
+            "Facility scan begun. Estimated time: {LENGTH} seconds."
+        );
+
         [Description("Determines the C.A.S.S.I.E string to use when the scan is completed.")]
         public CassieMessage ScanFinishMessage { get; set; } = new(
             "FACILITY SCAN COMPLETE . {HUMANCOUNT} HUMANS DETECTED . {SCPCOUNT} SCPS DETECTED . FOUND {LIST}",

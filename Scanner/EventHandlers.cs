@@ -11,6 +11,7 @@ using MEC;
 using PlayerRoles;
 using Exiled.Events.EventArgs.Server;
 using Scanner.Structures;
+using Exiled.API.Features.Pools;
 
 namespace Scanner
 {
@@ -32,7 +33,8 @@ namespace Scanner
             return AliveRoles;
         }
 
-        /* GhostSpectator */ private static bool IsGhost(Player Ply)
+        /* GhostSpectator */
+        private static bool IsGhost(Player Ply)
         {/*
             Assembly assembly = Loader.Plugins.FirstOrDefault(pl => pl.Name == "GhostSpectator")?.Assembly;
             if (assembly == null) return false;
@@ -75,8 +77,8 @@ namespace Scanner
         {
             try
             {
-                StringBuilder builderCassie = new StringBuilder();
-                StringBuilder builderCaption = new StringBuilder();
+                StringBuilder builderCassie = StringBuilderPool.Pool.Get();
+                StringBuilder builderCaption = StringBuilderPool.Pool.Get();
                 foreach (Team t in GetAliveTeams())
                 {
                     if (t == Team.SCPs) continue;
@@ -120,8 +122,8 @@ namespace Scanner
                         builderCaption.Append($"{message.CaptionText}, ");
                     }
                 }
-                string listCassie = builderCassie.ToString();
-                string listCaption = builderCaption.ToString();
+                string listCassie = StringBuilderPool.Pool.ToStringReturn(builderCassie);
+                string listCaption = StringBuilderPool.Pool.ToStringReturn(builderCaption);
                 if (listCassie.Length == 0)
                 {
                     Cassie.MessageTranslated(plugin.Translation.ScanNobodyMessage.CassieText, plugin.Translation.ScanNobodyMessage.CaptionText);
@@ -146,7 +148,7 @@ namespace Scanner
 
         public IEnumerator<float> ScanLoop()
         {
-            for (; ;)
+            for (; ; )
             {
                 while (Player.List.Where(Ply => Ply.IsAlive).Count() < 1)
                 {
@@ -157,8 +159,11 @@ namespace Scanner
                 {
                     continue;
                 }
+                CassieMessage message = plugin.Translation.ScanStartMessage;
+                string cassie = message.CassieText.Replace("{LENGTH}", plugin.Config.ScanLength.ToString());
+                string caption = message.CaptionText.Replace("{LENGTH}", plugin.Config.ScanLength.ToString());
                 Plugin.ScanInProgress = true;
-                Cassie.Message(plugin.Config.ScanStartMessage.Replace("{LENGTH}", plugin.Config.ScanLength.ToString()));
+                Cassie.MessageTranslated(cassie, caption);
                 yield return Timing.WaitForSeconds(plugin.Config.ScanLength);
                 Scan();
             }
@@ -175,7 +180,7 @@ namespace Scanner
             {
                 Timing.CallDelayed(0.3f + plugin.Config.AnnounceScpsDelay, () =>
                 {
-                    StringBuilder scpList = new StringBuilder();
+                    StringBuilder scpList = StringBuilderPool.Pool.Get();
                     Dictionary<RoleTypeId, int> ScpCount = new Dictionary<RoleTypeId, int> { };
                     foreach (Player Ply in Player.List.Where(Ply => Ply.Role.Team == Team.SCPs))
                     {
@@ -194,11 +199,14 @@ namespace Scanner
                     }
                     foreach (KeyValuePair<RoleTypeId, int> item in ScpCount)
                     {
-                        scpList.Append(GetScpString(item.Key, item.Value));
+                        scpList.Append(GetScpString(item.Key, item.Value).CassieText);
                         scpList.Append(" . ");
                     }
-                    string str = (GetNumPlayersInTeam(Team.SCPs) > 1 ? plugin.Config.ScpAnnounceStringMultiple : plugin.Config.ScpAnnounceStringSingular).Replace("{list}", scpList.ToString());
-                    Cassie.Message(str);
+                    string scpListString = StringBuilderPool.Pool.ToStringReturn(scpList);
+                    CassieMessage msg = GetNumPlayersInTeam(Team.SCPs) > 1 ? plugin.Translation.ScpAnnounceStringMultiple : plugin.Translation.ScpAnnounceStringSingular;
+                    string str = msg.CassieText.Replace("{list}", scpListString);
+                    string caption = msg.CaptionText.Replace("{list}", scpListString);
+                    Cassie.MessageTranslated(str, caption);
                 });
             }
             if (plugin.Config.RegularScanning == true)
