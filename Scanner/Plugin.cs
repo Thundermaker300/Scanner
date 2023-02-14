@@ -23,6 +23,7 @@ namespace Scanner
 
             Handlers.Warhead.Detonated += handler.OnDetonated;
 
+            ScriptedEventsIntegration.AddCustomActions();
             base.OnEnabled();
         }
 
@@ -35,6 +36,8 @@ namespace Scanner
 
             handler = null;
             Singleton = null;
+
+            ScriptedEventsIntegration.UnregisterCustomActions();
             base.OnDisabled();
         }
 
