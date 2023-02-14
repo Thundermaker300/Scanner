@@ -81,6 +81,7 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptedEventsIntegration.cs" />
     <Compile Include="Structures\CassieMessage.cs" />
     <Compile Include="Translation.cs" />
   </ItemGroup>
