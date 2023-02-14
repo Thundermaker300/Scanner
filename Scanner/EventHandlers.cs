@@ -92,7 +92,7 @@ namespace Scanner
                 StringBuilder builderCaption = StringBuilderPool.Pool.Get();
                 foreach (Team t in GetAliveTeams())
                 {
-                    if (t == Team.SCPs) continue;
+                    if (t is Team.SCPs or Team.OtherAlive) continue;
                     CassieMessage message = GetCassieMessage(t);
                     builderCassie.Append(message.CassieText);
                     builderCaption.Append(message.CaptionText);
