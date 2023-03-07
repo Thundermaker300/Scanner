@@ -101,8 +101,8 @@ namespace Scanner
                 var SHPlayers = Player.Get(ply => ply.SessionVariables.ContainsKey("IsSH"));
                 if (SHPlayers.Count() > 0)
                 {
-                    builderCassie.Append($"{SHPlayers.Count()} SERPENTS HAND . ");
-                    builderCaption.Append($"{SHPlayers.Count()} Serpent's Hand, ");
+                    builderCassie.Append($"{SHPlayers.Count()} {Plugin.Singleton.Translation.SerpentsHandPronounce.CassieText} . ");
+                    builderCaption.Append($"{SHPlayers.Count()} {Plugin.Singleton.Translation.SerpentsHandPronounce.CaptionText}, ");
                 }
                 if (plugin.Config.IncludeScpListInScan == true)
                 {
