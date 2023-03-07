@@ -2,12 +2,10 @@ name: Scanner Build
 on:
   push:
     branches:
-    - main
-    - dev
+    - master
   pull_request:
     branches:
-    - main
-    - dev
+    - master
   workflow_dispatch:
 env:
   REFERENCES_URL: https://exiled.host/build_deps/Dev.zip
