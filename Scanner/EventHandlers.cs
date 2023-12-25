@@ -19,6 +19,7 @@ namespace Scanner
     public class EventHandlers
     {
         private static Plugin plugin;
+        private static Translation mockTranslation = new();
         private List<CoroutineHandle> Coroutines = new List<CoroutineHandle> { };
         public EventHandlers(Plugin P) => plugin = P;
         private static List<Team> GetAliveTeams()
@@ -73,16 +74,42 @@ namespace Scanner
             {
                 return new(string.Empty, string.Empty);
             }
+
+            CassieMessage message;
+            if (amount == 1)
+            {
+                if (!plugin.Translation.TeamPronounciationSingular.TryGetValue(t, out message))
+                    message = mockTranslation.TeamPronounciationSingular.FirstOrDefault(d => d.Key == t)?.Value ?? new();
+            }
+            else
+            {
+                if (!plugin.Translation.TeamPronounciationMultiple.TryGetValue(t, out message))
+                    message = mockTranslation.TeamPronounciationMultiple.FirstOrDefault(d => d.Key == t)?.Value ?? new();
+            }
+
             return new(
-                $"{amount} {(amount > 1 ? plugin.Translation.TeamPronounciationMultiple[t].CassieText : plugin.Translation.TeamPronounciationSingular[t].CassieText)} . ",
-                $"{amount} {(amount > 1 ? plugin.Translation.TeamPronounciationMultiple[t].CaptionText : plugin.Translation.TeamPronounciationSingular[t].CaptionText)}, "
+                $"{amount} {message.CassieText} . ",
+                $"{amount} {message.CaptionText}, "
             );
         }
 
-        public static CassieMessage GetScpString(RoleTypeId rt, int amount) => new(
-            $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Translation.ScpPronounciation[rt].CassieText}",
-            $"{(amount == 1 ? string.Empty : $"{amount} ")}{plugin.Translation.ScpPronounciation[rt].CaptionText}"
-        );
+        public static CassieMessage GetScpString(RoleTypeId rt, int amount)
+        {
+            string amountDisplay = amount.ToString() + " ";
+            if (amount == 1)
+                amountDisplay = string.Empty;
+
+            if (plugin.Translation.ScpPronounciation.TryGetValue(rt, out CassieMessage msg2))
+            {
+                return new($"{amountDisplay}{msg2.CassieText}", $"{amountDisplay}{msg2.CaptionText}");
+            }
+            else if (mockTranslation.ScpPronounciation.TryGetValue(rt, out CassieMessage msg3))
+            {
+                return new($"{amountDisplay}{msg3.CassieText}", $"{amountDisplay}{msg3.CaptionText}");
+            }
+
+            return new();
+        }
 
         public static void Scan()
         {
@@ -217,8 +244,8 @@ namespace Scanner
                     }
                     string scpListString = StringBuilderPool.Pool.ToStringReturn(scpList);
                     CassieMessage msg = GetNumPlayersInTeam(Team.SCPs) > 1 ? plugin.Translation.ScpAnnounceStringMultiple : plugin.Translation.ScpAnnounceStringSingular;
-                    string str = msg.CassieText.Replace("{list}", scpListString);
-                    string caption = msg.CaptionText.Replace("{list}", scpListString);
+                    string str = msg.CassieText.Replace("{LIST}", scpListString);
+                    string caption = msg.CaptionText.Replace("{LIST}", scpListString);
                     Cassie.MessageTranslated(str, caption);
                 });
             }
