@@ -79,12 +79,12 @@ namespace Scanner
             if (amount == 1)
             {
                 if (!plugin.Translation.TeamPronounciationSingular.TryGetValue(t, out message))
-                    message = mockTranslation.TeamPronounciationSingular.FirstOrDefault(d => d.Key == t)?.Value ?? new();
+                    message = mockTranslation.TeamPronounciationSingular.FirstOrDefault(d => d.Key == t).Value ?? new();
             }
             else
             {
                 if (!plugin.Translation.TeamPronounciationMultiple.TryGetValue(t, out message))
-                    message = mockTranslation.TeamPronounciationMultiple.FirstOrDefault(d => d.Key == t)?.Value ?? new();
+                    message = mockTranslation.TeamPronounciationMultiple.FirstOrDefault(d => d.Key == t).Value ?? new();
             }
 
             return new(
